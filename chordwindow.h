@@ -24,7 +24,7 @@ public:
     void CalculateCentreOfArcs(int i, float cA, float startX, float startY);
     void PlaceLinks();
     void DrawLinks(QPoint i, QPoint o);
-    void CalculateCentreOfArcs(int i, int angle);
+    void CalculateCentreOfArcs(int i, int startAngle, int endAngle);
 };
 
 #endif // CHORDWINDOW_H

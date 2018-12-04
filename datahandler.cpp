@@ -46,6 +46,9 @@ QMultiHash<QString, QString> DataHandler::readCsvLinks()
     {
         QTextStream in(&file);
         in.readLine();
+        int incounter = 0;
+        int outcounter = 0;
+        int notCounter = 0;
         while(!in.atEnd())
         {
             QString line = in.readLine();
@@ -62,14 +65,16 @@ QMultiHash<QString, QString> DataHandler::readCsvLinks()
                 for(int i=0; i<inputs.split(";").size(); ++i)
                 {
                     QString input = inputs.split(";").at(i);
-                    if(links.contains(input,node))
-                    {
-                        //do nothing
-                    }else
-                    {
-                        links.insert(input, node);
-                    }
-                   ;
+                    links.insert(input, node);
+//                    if(links.contains(input,node))
+//                    {
+//                        //do nothing
+//                        ++notCounter;
+//                    }else
+//                    {
+//                        links.insert(input, node);
+//                        ++incounter;
+//                    }
                 }
             }
             if(outputs.isEmpty())
@@ -80,17 +85,24 @@ QMultiHash<QString, QString> DataHandler::readCsvLinks()
                 for(int j=0; j<outputs.split(";").size(); ++j)
                 {
                     QString output = outputs.split(";").at(j);
-                    if(links.contains(node,output))
-                    {
-                        //do nothing
-                    }else
-                    {
-                        links.insert(node, output);
-                    }
+                    links.insert(node, output);
+
+//                    if(links.contains(node,output))
+//                    {
+//                        //do nothing
+//                        ++notCounter;
+//                    }else
+//                    {
+//                        links.insert(node, output);
+//                        ++outcounter;
+//                    }
 
                 }
             }
         }
+        qDebug() << incounter;
+        qDebug() << outcounter;
+        qDebug() << notCounter;
         file.close();
     }
 

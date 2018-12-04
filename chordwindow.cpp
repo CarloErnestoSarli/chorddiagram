@@ -33,7 +33,7 @@ void ChordWindow::paintEvent(QPaintEvent *event)
     DrawCircle(RADIUS, CENTRE);
     PlaceNodes(m_nodesNumber, spacing, width, circumference);
     //CalculateCentreOfArcs(0, centreAngle, 79, 50);
-    qDebug() << links;
+
     PlaceLinks();
 
 }
@@ -48,7 +48,8 @@ void ChordWindow::PlaceNodes(int nodes, float spacing, float width, float circum
         int start = i*(degSpacing);
         int end = degWidth;
         DrawArc(start, end);
-        CalculateCentreOfArcs(i, start);
+        qDebug()<< start << start+end;
+        CalculateCentreOfArcs(i, start, (start+end));
 
     }
 }
@@ -73,10 +74,12 @@ void ChordWindow::PlaceNodes(int nodes, float spacing, float width, float circum
 
 //}
 
-void ChordWindow::CalculateCentreOfArcs(int i, int angle)
+void ChordWindow::CalculateCentreOfArcs(int i, int startAngle, int endAngle)
 {
-    float x = 50 + RADIUS*qCos(angle);
-    float y = 50 + RADIUS*qSin(angle);
+    startAngle = startAngle/16/M_PI;
+    endAngle = endAngle/16/M_PI;
+    float x = 50 + RADIUS*qCos((startAngle+endAngle)/2);
+    float y = 50 + RADIUS*qSin((startAngle+endAngle)/2);
     QString node = nodes[i];
     linksCentre.insert(node, QPoint((int)x,(int)y));
 }
